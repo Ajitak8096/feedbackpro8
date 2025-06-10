@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +22,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ExportButton } from "@/components/ExportButton";
 
 interface FeedbackItem {
   id: number;
@@ -148,10 +148,7 @@ const AdminDashboard = () => {
             <Separator orientation="vertical" className="h-6" />
             <h1 className="text-2xl font-bold">Admin Dashboard</h1>
           </div>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export Data
-          </Button>
+          <ExportButton data={feedback} filename="feedback_export" />
         </div>
       </header>
 
@@ -449,3 +446,5 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+</initial_code>
