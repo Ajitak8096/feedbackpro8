@@ -18,7 +18,6 @@ export const Footer = () => {
           </p>
           <div className="flex items-center space-x-4">
             <Badge variant="secondary" className="bg-primary/10 text-primary">
-              Made with ❤️
             </Badge>
           </div>
         </div>
