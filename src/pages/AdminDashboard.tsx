@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,10 +19,12 @@ import {
   ArrowLeft,
   Clock,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ExportButton } from "@/components/ExportButton";
+import { useToast } from "@/hooks/use-toast";
 
 interface FeedbackItem {
   id: number;
@@ -46,6 +47,7 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const { toast } = useToast();
 
   useEffect(() => {
     // Load feedback from localStorage
@@ -82,6 +84,16 @@ const AdminDashboard = () => {
     );
     setFeedback(updatedFeedback);
     localStorage.setItem('feedback', JSON.stringify(updatedFeedback));
+  };
+
+  const deleteFeedback = (id: number) => {
+    const updatedFeedback = feedback.filter(item => item.id !== id);
+    setFeedback(updatedFeedback);
+    localStorage.setItem('feedback', JSON.stringify(updatedFeedback));
+    toast({
+      title: "Feedback deleted",
+      description: "The feedback item has been successfully removed.",
+    });
   };
 
   const stats = {
@@ -320,8 +332,18 @@ const AdminDashboard = () => {
                               <p className="text-sm text-muted-foreground">{item.email}</p>
                             )}
                           </div>
-                          <div className="text-xs text-muted-foreground">
-                            {new Date(item.timestamp).toLocaleDateString()}
+                          <div className="flex items-center space-x-2">
+                            <div className="text-xs text-muted-foreground">
+                              {new Date(item.timestamp).toLocaleDateString()}
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => deleteFeedback(item.id)}
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
 
