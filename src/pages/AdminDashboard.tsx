@@ -152,70 +152,73 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link to="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span>Back to Home</span>
-            </Link>
-            <Separator orientation="vertical" className="h-6" />
-            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-4">
+              <Link to="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
+                <ArrowLeft className="h-5 w-5" />
+                <span className="hidden sm:inline">Back to Home</span>
+                <span className="sm:hidden">Back</span>
+              </Link>
+              <Separator orientation="vertical" className="h-6 hidden sm:block" />
+              <h1 className="text-xl sm:text-2xl font-bold">Admin Dashboard</h1>
+            </div>
+            <ExportButton data={feedback} filename="feedback_export" />
           </div>
-          <ExportButton data={feedback} filename="feedback_export" />
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="feedback">Feedback Management</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+            <TabsTrigger value="feedback" className="text-xs sm:text-sm">Feedback</TabsTrigger>
+            <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Feedback</CardTitle>
+                  <CardTitle className="text-xs sm:text-sm font-medium">Total Feedback</CardTitle>
                   <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.total}</div>
+                  <div className="text-xl sm:text-2xl font-bold">{stats.total}</div>
                   <p className="text-xs text-muted-foreground">All time submissions</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Average Rating</CardTitle>
+                  <CardTitle className="text-xs sm:text-sm font-medium">Average Rating</CardTitle>
                   <Star className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.averageRating}/5</div>
+                  <div className="text-xl sm:text-2xl font-bold">{stats.averageRating}/5</div>
                   <p className="text-xs text-muted-foreground">Customer satisfaction</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">New Feedback</CardTitle>
+                  <CardTitle className="text-xs sm:text-sm font-medium">New Feedback</CardTitle>
                   <TrendingUp className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats.new}</div>
+                  <div className="text-xl sm:text-2xl font-bold">{stats.new}</div>
                   <p className="text-xs text-muted-foreground">Requires attention</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Resolution Rate</CardTitle>
+                  <CardTitle className="text-xs sm:text-sm font-medium">Resolution Rate</CardTitle>
                   <CheckCircle className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">
+                  <div className="text-xl sm:text-2xl font-bold">
                     {stats.total > 0 ? Math.round((stats.resolved / stats.total) * 100) : 0}%
                   </div>
                   <p className="text-xs text-muted-foreground">Resolved issues</p>
@@ -226,27 +229,27 @@ const AdminDashboard = () => {
             {/* Recent Feedback */}
             <Card>
               <CardHeader>
-                <CardTitle>Recent Feedback</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Recent Feedback</CardTitle>
                 <CardDescription>Latest 5 feedback submissions</CardDescription>
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-80">
                   <div className="space-y-4">
                     {feedback.slice(0, 5).map((item) => (
-                      <div key={item.id} className="flex items-start space-x-4 p-4 border border-border rounded-lg">
+                      <div key={item.id} className="flex flex-col sm:flex-row sm:items-start space-y-2 sm:space-y-0 sm:space-x-4 p-4 border border-border rounded-lg">
                         <div className="flex-1 space-y-2">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-medium">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <h4 className="font-medium text-sm sm:text-base">
                               {item.anonymous ? "Anonymous User" : item.name}
                             </h4>
                             <div className="flex items-center space-x-2">
                               {renderStars(item.rating[0])}
                             </div>
                           </div>
-                          <p className="text-sm text-muted-foreground">{item.comments}</p>
-                          <div className="flex items-center space-x-2">
-                            <Badge variant="secondary">{item.category}</Badge>
-                            <Badge className={getStatusColor(item.status)}>
+                          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-none">{item.comments}</p>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge variant="secondary" className="text-xs">{item.category}</Badge>
+                            <Badge className={`${getStatusColor(item.status)} text-xs`}>
                               {getStatusIcon(item.status)}
                               <span className="ml-1">{item.status}</span>
                             </Badge>
@@ -264,10 +267,10 @@ const AdminDashboard = () => {
             {/* Filters */}
             <Card>
               <CardHeader>
-                <CardTitle>Filter & Search</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Filter & Search</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-col gap-4">
                   <div className="flex-1">
                     <div className="relative">
                       <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -279,31 +282,33 @@ const AdminDashboard = () => {
                       />
                     </div>
                   </div>
-                  <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                    <SelectTrigger className="w-full md:w-48">
-                      <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      <SelectItem value="feature-request">Feature Request</SelectItem>
-                      <SelectItem value="bug-report">Bug Report</SelectItem>
-                      <SelectItem value="general-feedback">General Feedback</SelectItem>
-                      <SelectItem value="user-experience">User Experience</SelectItem>
-                      <SelectItem value="performance">Performance</SelectItem>
-                      <SelectItem value="support">Support</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-full md:w-48">
-                      <SelectValue placeholder="Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="new">New</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="resolved">Resolved</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="feature-request">Feature Request</SelectItem>
+                        <SelectItem value="bug-report">Bug Report</SelectItem>
+                        <SelectItem value="general-feedback">General Feedback</SelectItem>
+                        <SelectItem value="user-experience">User Experience</SelectItem>
+                        <SelectItem value="performance">Performance</SelectItem>
+                        <SelectItem value="support">Support</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Status</SelectItem>
+                        <SelectItem value="new">New</SelectItem>
+                        <SelectItem value="in-progress">In Progress</SelectItem>
+                        <SelectItem value="resolved">Resolved</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -311,17 +316,17 @@ const AdminDashboard = () => {
             {/* Feedback List */}
             <Card>
               <CardHeader>
-                <CardTitle>Feedback Items ({filteredFeedback.length})</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Feedback Items ({filteredFeedback.length})</CardTitle>
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-96">
                   <div className="space-y-4">
                     {filteredFeedback.map((item) => (
-                      <div key={item.id} className="border border-border rounded-lg p-6 space-y-4">
-                        <div className="flex items-start justify-between">
-                          <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <h3 className="font-medium">
+                      <div key={item.id} className="border border-border rounded-lg p-4 sm:p-6 space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                          <div className="space-y-2 flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                              <h3 className="font-medium text-sm sm:text-base">
                                 {item.anonymous ? "Anonymous User" : item.name}
                               </h3>
                               <div className="flex items-center space-x-1">
@@ -329,10 +334,10 @@ const AdminDashboard = () => {
                               </div>
                             </div>
                             {!item.anonymous && (
-                              <p className="text-sm text-muted-foreground">{item.email}</p>
+                              <p className="text-xs sm:text-sm text-muted-foreground break-all sm:break-normal">{item.email}</p>
                             )}
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center justify-between sm:justify-end space-x-2">
                             <div className="text-xs text-muted-foreground">
                               {new Date(item.timestamp).toLocaleDateString()}
                             </div>
@@ -348,25 +353,25 @@ const AdminDashboard = () => {
                         </div>
 
                         <div className="flex flex-wrap gap-2">
-                          <Badge variant="outline">{item.category}</Badge>
+                          <Badge variant="outline" className="text-xs">{item.category}</Badge>
                           {item.priority && (
-                            <Badge className={getPriorityColor(item.priority)}>
+                            <Badge className={`${getPriorityColor(item.priority)} text-xs`}>
                               {item.priority} priority
                             </Badge>
                           )}
-                          <Badge className={getStatusColor(item.status)}>
+                          <Badge className={`${getStatusColor(item.status)} text-xs`}>
                             {getStatusIcon(item.status)}
                             <span className="ml-1">{item.status}</span>
                           </Badge>
                         </div>
 
                         {item.comments && (
-                          <p className="text-sm bg-muted p-3 rounded">{item.comments}</p>
+                          <p className="text-xs sm:text-sm bg-muted p-3 rounded break-words">{item.comments}</p>
                         )}
 
                         {item.features.length > 0 && (
                           <div className="space-y-2">
-                            <p className="text-sm font-medium">Important Features:</p>
+                            <p className="text-xs sm:text-sm font-medium">Important Features:</p>
                             <div className="flex flex-wrap gap-1">
                               {item.features.map((feature) => (
                                 <Badge key={feature} variant="secondary" className="text-xs">
@@ -377,12 +382,12 @@ const AdminDashboard = () => {
                           </div>
                         )}
 
-                        <div className="flex space-x-2 pt-2">
+                        <div className="flex flex-col sm:flex-row gap-2 pt-2">
                           <Select 
                             value={item.status} 
                             onValueChange={(value) => updateFeedbackStatus(item.id, value)}
                           >
-                            <SelectTrigger className="w-40">
+                            <SelectTrigger className="w-full sm:w-40">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -404,24 +409,24 @@ const AdminDashboard = () => {
             {/* Category Distribution */}
             <Card>
               <CardHeader>
-                <CardTitle>Feedback by Category</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">Feedback by Category</CardTitle>
                 <CardDescription>Distribution of feedback across different categories</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {Object.entries(categoryStats).map(([category, count]) => (
-                    <div key={category} className="flex items-center justify-between">
-                      <span className="text-sm font-medium capitalize">
+                    <div key={category} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between">
+                      <span className="text-xs sm:text-sm font-medium capitalize">
                         {category.replace('-', ' ')}
                       </span>
                       <div className="flex items-center space-x-2">
-                        <div className="w-32 bg-muted rounded-full h-2">
+                        <div className="w-full sm:w-32 bg-muted rounded-full h-2">
                           <div 
                             className="bg-primary h-2 rounded-full" 
                             style={{ width: `${(count / stats.total) * 100}%` }}
                           />
                         </div>
-                        <span className="text-sm text-muted-foreground w-8">{count}</span>
+                        <span className="text-xs sm:text-sm text-muted-foreground w-8">{count}</span>
                       </div>
                     </div>
                   ))}
@@ -430,34 +435,34 @@ const AdminDashboard = () => {
             </Card>
 
             {/* Status Distribution */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-blue-600">New</CardTitle>
+                  <CardTitle className="text-blue-600 text-sm sm:text-base">New</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats.new}</div>
-                  <p className="text-sm text-muted-foreground">Pending review</p>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats.new}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Pending review</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-yellow-600">In Progress</CardTitle>
+                  <CardTitle className="text-yellow-600 text-sm sm:text-base">In Progress</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats.inProgress}</div>
-                  <p className="text-sm text-muted-foreground">Being addressed</p>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats.inProgress}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Being addressed</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-green-600">Resolved</CardTitle>
+                  <CardTitle className="text-green-600 text-sm sm:text-base">Resolved</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats.resolved}</div>
-                  <p className="text-sm text-muted-foreground">Successfully handled</p>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats.resolved}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Successfully handled</p>
                 </CardContent>
               </Card>
             </div>
