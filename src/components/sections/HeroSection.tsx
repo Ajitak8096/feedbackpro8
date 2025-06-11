@@ -18,7 +18,7 @@ export const HeroSection = () => {
           <div className="animate-fade-in">
             <Badge variant="secondary" className="mb-6 text-sm px-4 py-2 animate-scale-in bg-primary/10 text-primary border-primary/20">
               <Star className="h-3 w-3 mr-1" />
-              Trusted by 10,000+ Organizations
+              Trusted by 1000+ Organizations
             </Badge>
             <h1 className="text-5xl font-bold text-foreground mb-6 leading-tight animate-fade-in [animation-delay:200ms]">
               Transform Your Feedback into
